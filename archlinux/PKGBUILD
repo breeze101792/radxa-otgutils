@@ -1,0 +1,27 @@
+pkgname=radxa_otgutils
+pkgver=1.0
+pkgrel=1
+arch=(aarch64)
+source=("$pkgname-$pkgver::git+https://github.com/breeze101792/radxa-otgutils.git#branch=main")
+md5sums=('SKIP')
+
+build() {
+    cd $pkgname-$pkgver
+    echo 'Ignore'
+}
+
+package()
+{
+    cd $pkgname-$pkgver
+    # mkdir -p ${pkgdir}
+    # realpath ${pkgdir}
+    # make DESTDIR=${pkgdir} install
+
+    install -m755 -d ${pkgdir}/usr/bin || return 1
+    # install -m755 -d ${pkgdir}/usr/share/man/man8 || return 1
+    install -m755 -d ${pkgdir}/usr/lib/systemd/system || return 1
+
+    install -m755 src/radxa-otgutils ${pkgdir}/usr/bin/ || return 1
+    # install -m644 man/*.8 ${pkgdir}/usr/share/man/man8 || return 1
+    install -m644 archlinux/radxa-otgutils*.service ${pkgdir}/usr/lib/systemd/system/ || return 1
+}
